@@ -8,12 +8,13 @@ var cityID = "houston";
 var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83"
 
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityID + APIKey;
-// AJAX call for current forecast
 
+// Initial function
 function initPage () {
+// AJAX call for current forecast
 $.ajax({
     url: queryURL,
-    method:'GET'
+    method:"GET"
 }).then(function(response) {
     console.log(response);
 // Variables being defined for data retrieved from the response object
@@ -22,18 +23,31 @@ $.ajax({
     var tempF = (response.main.temp - 273.15) * 1.80 + 32;
     var humidity = response.main.humidity;
     var windSpeed = response.wind.speed + " MPH";
-    var uvIndex = 
     console.log(cityName);
     console.log(currentDate);
     console.log(tempF);
     console.log(humidity);
     console.log(windSpeed);
+// Lat and lon values obtained from first ajax call response
+    var lat = response.coord.lat;
+    var lon = response.coord.lon;
+// Another API to get UV Index using the lat and lon values from first response
+    var uvURL = "http://api.openweathermap.org/data/2.5/uvi?" + APIKey + "&lat=" + lat + "&lon=" + lon;
+// Second ajax call
+    $.ajax({
+        url: uvURL,
+        method: "GET"
+    }).then(function(uvResponse) {
+        console.log(uvResponse);
+
+        var uvIndex = uvResponse.value;
     
     $(".city-id").text(cityName + " " + currentDate);
     $(".temp").text(tempF);
     $(".humidity").text(humidity);
     $(".wind").text(windSpeed);
-    
+    $(".uv").text(uvIndex);
+    })
 });
 
 

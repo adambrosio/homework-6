@@ -4,3 +4,4 @@
     // Divs inside that will house various bits of information
 // 5 Cards will populate underneath that will update with the 5 day forecast (seperate API)
 // Need moment.js
+// Variables being defined for data retrieved from the response object

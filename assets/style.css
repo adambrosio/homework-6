@@ -1,5 +1,7 @@
-body {
-    padding-left: 35px;
+.header {
+    color: white;
+    background-color: rgb(66, 65, 65);
+    text-align: center;
 }
 
 .current-container {

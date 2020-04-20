@@ -20,6 +20,8 @@ $.ajax({
 // Variables being defined for data retrieved from the response object
     var cityName = response.name;
     var currentDate = moment().format("MMMM Do" + ", " + "YYYY");
+    var currentIcon = response.weather[0].icon;
+    var iconURL = "http://openweathermap.org/img/w/" + currentIcon + ".png";
     var tempF = (response.main.temp - 273.15) * 1.80 + 32;
     var humidity = response.main.humidity;
     var windSpeed = response.wind.speed + " MPH";
@@ -42,16 +44,14 @@ $.ajax({
 
         var uvIndex = uvResponse.value;
     
-    $(".city-id").text(cityName + " " + currentDate);
-    $(".temp").text(tempF);
-    $(".humidity").text(humidity);
-    $(".wind").text(windSpeed);
-    $(".uv").text(uvIndex);
+        $(".city-header").text(cityName + " " + currentDate);
+        $(".icon").attr("src", iconURL);
+        $(".temp").text(tempF);
+        $(".humidity").text(humidity);
+        $(".wind").text(windSpeed);
+        $(".uv").text(uvIndex);
     })
 });
-
-
-
 }
 
 initPage ();

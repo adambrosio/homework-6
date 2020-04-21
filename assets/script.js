@@ -37,6 +37,8 @@ $.ajax({
 
         var uvIndex = uvResponse.value;
     
+        var cityDiv = $("<h2>").addClass("city-header");
+        $(".city-id").append(cityDiv);
         $(".city-header").text(cityName + " " + currentDate);
         $("#wicon").attr("src", iconURL);
         $(".temp").text(tempF);
@@ -52,7 +54,7 @@ $.ajax({
         method: "GET"
     }).then(function(forecastResponse){
         console.log(forecastResponse);
-
+        // Dates for each day
         var dayOne = forecastResponse.list[0].dt_txt;
         var dayTwo = forecastResponse.list[7].dt_txt;
         var dayThree = forecastResponse.list[15].dt_txt;
@@ -82,5 +84,5 @@ initPage ();
 //     var city = $('#search-term').val();
 //     var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83"
 
-//     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityID + APIKey;
+//     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
 // }

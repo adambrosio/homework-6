@@ -1,3 +1,7 @@
+var city = "houston";
+var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
+var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
+
 // Initial function
 function initPage () {
 // AJAX call for current forecast
@@ -41,7 +45,7 @@ $.ajax({
         $(".uv").text(uvIndex);
     })
 
-    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityID + APIKey;
+    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
 // Third ajax call to get 5 day forecast
     $.ajax({
         url: forecastURL,
@@ -56,6 +60,16 @@ $.ajax({
         var dayFive = forecastResponse.list[31].dt_txt;
         var forecastDays = [dayOne, dayTwo, dayThree, dayFour, dayFive];
         console.log(forecastDays);
+
+        var icon = forecastResponse.list[0].weather[0].icon;
+        var forecastIcon ="http://openweathermap.org/img/w/" + icon + ".png";
+        var forecastTemp = (forecastResponse.list[0].main.temp - 273.15) * 1.80 + 32;
+        var forecastHumidity = forecastResponse.list[0].main.humidity;
+        $(".day-1").text(moment(dayOne).format("MMMM Do" + ", " + "YYYY"));
+        $("#wicon-1").attr("src", forecastIcon);
+        $(".temp-card-1").text(forecastTemp + " °F");
+        $(".humidity-card-1").text("Humidity: " + forecastHumidity);
+
     })
 });
 }

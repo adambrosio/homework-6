@@ -1,9 +1,12 @@
+// Initial function
+function initPage () {
+    
+// Test city for APIs
 var city = "houston";
 var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
 
-// Initial function
-function initPage () {
+
 // AJAX call for current forecast
 $.ajax({
     url: queryURL,
@@ -16,13 +19,15 @@ $.ajax({
     var currentIcon = response.weather[0].icon;
     var iconURL = "http://openweathermap.org/img/w/" + currentIcon + ".png";
     var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+    // Rounding temperature to two decimal places
+    var tempRound = tempF.toFixed(2);
     var humidity = response.main.humidity;
-    var windSpeed = response.wind.speed + " MPH";
-    console.log(cityName);
-    console.log(currentDate);
-    console.log(tempF);
-    console.log(humidity);
-    console.log(windSpeed);
+    var windSpeed = response.wind.speed;
+    // console.log(cityName);
+    // console.log(currentDate);
+    // console.log(tempF);
+    // console.log(humidity);
+    // console.log(windSpeed);
 // Lat and lon values obtained from first ajax call response
     var lat = response.coord.lat;
     var lon = response.coord.lon;
@@ -41,10 +46,10 @@ $.ajax({
         $(".city-id").append(cityDiv);
         $(".city-header").text(cityName + " " + currentDate);
         $("#wicon").attr("src", iconURL);
-        $(".temp").text(tempF);
-        $(".humidity").text(humidity);
-        $(".wind").text(windSpeed);
-        $(".uv").text(uvIndex);
+        $(".temp").text("Temperature: " + tempRound + " °F");
+        $(".humidity").text("Humidity: " + humidity + "%");
+        $(".wind").text("Wind Speed: " + windSpeed + " MPH");
+        $(".uv").text("UV Index: " + uvIndex);
     })
 
     var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
@@ -52,9 +57,9 @@ $.ajax({
     $.ajax({
         url: forecastURL,
         method: "GET"
-    }).then(function(forecastResponse){
+    }).then(function(forecastResponse) {
         console.log(forecastResponse);
-        // Dates for each day
+        // Dates for each day ?????????????????????
         var dayOne = forecastResponse.list[0].dt_txt;
         var dayTwo = forecastResponse.list[7].dt_txt;
         var dayThree = forecastResponse.list[15].dt_txt;
@@ -66,11 +71,12 @@ $.ajax({
         var icon = forecastResponse.list[0].weather[0].icon;
         var forecastIcon ="http://openweathermap.org/img/w/" + icon + ".png";
         var forecastTemp = (forecastResponse.list[0].main.temp - 273.15) * 1.80 + 32;
+        var tempRound = forecastTemp.toFixed(2);
         var forecastHumidity = forecastResponse.list[0].main.humidity;
         $(".day-1").text(moment(dayOne).format("MMMM Do" + ", " + "YYYY"));
         $("#wicon-1").attr("src", forecastIcon);
-        $(".temp-card-1").text(forecastTemp + " °F");
-        $(".humidity-card-1").text("Humidity: " + forecastHumidity);
+        $(".temp-card-1").text(tempRound + " °F");
+        $(".humidity-card-1").text("Humidity: " + forecastHumidity + "%");
 
     })
 });
@@ -78,6 +84,7 @@ $.ajax({
 
 initPage ();
 
+// Event listener is breaking 
 // $('#submit-button').on('click', function () {
 //     console.log("hit");
 //     $('#current-search').empty();

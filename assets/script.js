@@ -1,14 +1,3 @@
-// Input field for city (Bootstrap)
-// Div that will populate with the current forecast for input city
-    // Divs inside that will house various bits of information
-// 5 Cards will populate underneath that will update with the 5 day forecast (seperate API)
-// Need moment.js
-
-var cityID = "houston";
-var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83"
-
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityID + APIKey;
-
 // Initial function
 function initPage () {
 // AJAX call for current forecast
@@ -35,7 +24,7 @@ $.ajax({
     var lon = response.coord.lon;
 // Another API to get UV Index using the lat and lon values from first response
     var uvURL = "http://api.openweathermap.org/data/2.5/uvi?" + APIKey + "&lat=" + lat + "&lon=" + lon;
-// Second ajax call
+// Second ajax call to get UV index
     $.ajax({
         url: uvURL,
         method: "GET"
@@ -45,30 +34,39 @@ $.ajax({
         var uvIndex = uvResponse.value;
     
         $(".city-header").text(cityName + " " + currentDate);
-        $(".icon").attr("src", iconURL);
+        $("#wicon").attr("src", iconURL);
         $(".temp").text(tempF);
         $(".humidity").text(humidity);
         $(".wind").text(windSpeed);
         $(".uv").text(uvIndex);
+    })
+
+    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityID + APIKey;
+// Third ajax call to get 5 day forecast
+    $.ajax({
+        url: forecastURL,
+        method: "GET"
+    }).then(function(forecastResponse){
+        console.log(forecastResponse);
+
+        var dayOne = forecastResponse.list[0].dt_txt;
+        var dayTwo = forecastResponse.list[7].dt_txt;
+        var dayThree = forecastResponse.list[15].dt_txt;
+        var dayFour = forecastResponse.list[23].dt_txt;
+        var dayFive = forecastResponse.list[31].dt_txt;
+        var forecastDays = [dayOne, dayTwo, dayThree, dayFour, dayFive];
+        console.log(forecastDays);
     })
 });
 }
 
 initPage ();
 
+// $('#submit-button').on('click', function () {
+//     console.log("hit");
+//     $('#current-search').empty();
+//     var city = $('#search-term').val();
+//     var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83"
 
-
-
-
-
-// // Var for city
-// var city = "austin";
-// // queryURL defined for 5 day forecast
-// var query = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
-// // AJAX call
-// $.ajax({
-//     url: query,
-//     method:'GET'
-// }).then(function(response){
-//     console.log(response);
-// });
+//     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityID + APIKey;
+// }

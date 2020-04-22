@@ -1,29 +1,24 @@
 // Initial function
 function initPage () {
     
-// Test city for APIs
-// var city = "houston";
-// var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
-// var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
 $(document).ready(function() {
     console.log("ready");
 });
-$('.submit-button').on('click', function () {
-        console.log("hit");
-        $('.current-search').empty();
-    
-        var city = $('#search-term').val();
-        var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
-        console.log(city)
-    
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
-// AJAX call for current forecast
-$.ajax({
-    url: queryURL,
-    method:"GET"
-}).then(function(response) {
-    console.log(response);
 
+// Event listener
+$(".submit-button").on("click", function() {
+    console.log("hit");
+    $(".city-id").empty();
+    var city = $("#search-term").val();
+    var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
+// AJAX call for current forecast
+    $.ajax({
+        url: queryURL,
+        method:"GET"
+    }).then(function(response) {
+        console.log(response);
 
 // Variables being defined for data retrieved from the response object
     var cityName = response.name;
@@ -35,11 +30,6 @@ $.ajax({
     var tempRound = tempF.toFixed(2);
     var humidity = response.main.humidity;
     var windSpeed = response.wind.speed;
-    // console.log(cityName);
-    // console.log(currentDate);
-    // console.log(tempF);
-    // console.log(humidity);
-    // console.log(windSpeed);
 // Lat and lon values obtained from first ajax call response
     var lat = response.coord.lat;
     var lon = response.coord.lon;
@@ -72,6 +62,7 @@ $.ajax({
         method: "GET"
     }).then(function(forecastResponse) {
         console.log(forecastResponse);
+
         // Dates for each day ?????????????????????
         var dayOne = forecastResponse.list[0].dt_txt;
         var dayTwo = forecastResponse.list[7].dt_txt;
@@ -90,27 +81,8 @@ $.ajax({
         $("#wicon-1").attr("src", forecastIcon);
         $(".temp-card-1").text(tempRound + " °F");
         $(".humidity-card-1").text("Humidity: " + forecastHumidity + "%");
-
     })
 });
-}
+};
 
 initPage ();
-
-// Event listener is breaking 
-// $('#submit-button').on('click', function () {
-//     console.log("hit");
-//     $('#current-search').empty();
-
-//     var city = $('#search-term').val();
-//     var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
-
-//     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
-
-//     $.ajax({
-//         url: queryURL,
-//         method: "GET"
-//     }).then(function(response){
-//         console.log(response)
-//     });
-// });

@@ -5,14 +5,14 @@ function initPage() {
         console.log("ready");
     });
 
-    // Event listener
+    // Event listener for enter keypress
     $("#search-term").keypress(function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             $(".submit-button").click();
         };
     });
-
+    // Event listener for click
     $(".submit-button").on("click", function() {
         console.log("hit");
         $(".city-id").empty();
@@ -46,7 +46,7 @@ function initPage() {
             $.ajax({
                 url: uvURL,
                 method: "GET"
-            }).then(function (uvResponse) {
+            }).then(function(uvResponse) {
                 console.log(uvResponse);
 
                 var uvIndex = uvResponse.value;
@@ -72,7 +72,8 @@ function initPage() {
             $("#forecast").empty();
             var results = forecastResponse.list
             for (var i = 0; i < results.length; i++) {
-                if (results[i].dt_txt.indexOf("12:00:00") == "12:00:00") {
+                // HERE'S THE PROBLEM
+                if (results[i].dt_txt.indexOf("12:00:00") === "12:00:00") {
                     var newDate = new Date();
                     var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                     var tempRound = temp.toFixed(2);

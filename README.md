@@ -6,6 +6,5 @@
 // Need moment.js
 // Variables defined for data retrieved from the response object
 
-// Enter key on event listener
 // 5 day forecast
 // Localstorage

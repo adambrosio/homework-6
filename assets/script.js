@@ -2,17 +2,29 @@
 function initPage () {
     
 // Test city for APIs
-var city = "houston";
-var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
-
-
+// var city = "houston";
+// var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
+// var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
+$(document).ready(function() {
+    console.log("ready");
+});
+$('.submit-button').on('click', function () {
+        console.log("hit");
+        $('.current-search').empty();
+    
+        var city = $('#search-term').val();
+        var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
+        console.log(city)
+    
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
 // AJAX call for current forecast
 $.ajax({
     url: queryURL,
     method:"GET"
 }).then(function(response) {
     console.log(response);
+
+
 // Variables being defined for data retrieved from the response object
     var cityName = response.name;
     var currentDate = moment().format("MMMM Do" + ", " + "YYYY");
@@ -50,7 +62,8 @@ $.ajax({
         $(".humidity").text("Humidity: " + humidity + "%");
         $(".wind").text("Wind Speed: " + windSpeed + " MPH");
         $(".uv").text("UV Index: " + uvIndex);
-    })
+    });
+});
 
     var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
 // Third ajax call to get 5 day forecast
@@ -88,8 +101,16 @@ initPage ();
 // $('#submit-button').on('click', function () {
 //     console.log("hit");
 //     $('#current-search').empty();
+
 //     var city = $('#search-term').val();
-//     var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83"
+//     var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
 
 //     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
-// }
+
+//     $.ajax({
+//         url: queryURL,
+//         method: "GET"
+//     }).then(function(response){
+//         console.log(response)
+//     });
+// });

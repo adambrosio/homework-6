@@ -5,3 +5,7 @@
 // 5 Cards will populate underneath that will update with the 5 day forecast (seperate API)
 // Need moment.js
 // Variables defined for data retrieved from the response object
+
+// Enter key on event listener
+// 5 day forecast
+// Localstorage

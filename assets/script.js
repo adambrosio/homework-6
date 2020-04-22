@@ -1,19 +1,19 @@
 // Initial function
 function initPage() {
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         console.log("ready");
     });
 
     // Event listener
-    $("#search-term").keypress(function (event) {
+    $("#search-term").keypress(function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             $(".submit-button").click();
         };
     });
 
-    $(".submit-button").on("click", function () {
+    $(".submit-button").on("click", function() {
         console.log("hit");
         $(".city-id").empty();
         var city = $("#search-term").val();
@@ -86,8 +86,6 @@ function initPage() {
                     cardBody.append(date, image, forecastTemp, forecastHumidity);
                     card.append(cardBody);
                     $("#forecast").append(card);
-
-                console.log()
                 };
             };
         });

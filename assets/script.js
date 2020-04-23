@@ -14,7 +14,6 @@ function initPage() {
     });
     // Event listener for click
     $(".submit-button").on("click", function() {
-        console.log("hit");
         $(".city-id").empty();
         var city = $("#search-term").val();
         var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
@@ -59,6 +58,15 @@ function initPage() {
                 $(".humidity").text("Humidity: " + humidity + "%");
                 $(".wind").text("Wind Speed: " + windSpeed + " MPH");
                 $(".uv").text("UV Index: " + uvIndex);
+
+                // Change background color for UV Index value
+                if (uvIndex < 3) {
+                    $(".uv").addClass("favorable");
+                } else if (uvIndex <= 7 && uvIndex >= 3) {
+                    $(".uv").addClass("moderate");
+                } else {
+                    $(".uv").addClass("severe");
+                }
             });
         });
 
@@ -67,18 +75,18 @@ function initPage() {
         $.ajax({
             url: forecastURL,
             method: "GET"
-        }).then(function(forecastResponse) {
+        }).then(function (forecastResponse) {
             console.log(forecastResponse);
             $("#forecast").empty();
             var results = forecastResponse.list
             for (var i = 0; i < results.length; i++) {
                 // HERE'S THE PROBLEM
-                if (results[i].dt_txt.indexOf("12:00:00") === "12:00:00") {
+                if (results[i].dt_txt.includes("12:00:00")) {
                     var newDate = new Date();
                     var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
                     var tempRound = temp.toFixed(2);
                     var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
-                    var cardBody = $("<div>").addClass("card-body p-3 forecastBody");
+                    var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
                     var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDateString());
                     var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
                     var image = $("<img>").attr("src", forecastIcon);

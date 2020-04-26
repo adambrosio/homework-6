@@ -52,7 +52,7 @@ function initPage() {
 
                 var cityDiv = $("<h2>").addClass("city-header");
                 $(".city-id").append(cityDiv);
-                $(".city-header").text(cityName + " " + currentDate);
+                $(".city-header").text(cityName + " " + "(" + currentDate + ")");
                 $("#wicon").attr("src", iconURL);
                 $(".temp").text("Temperature: " + tempRound + " °F");
                 $(".humidity").text("Humidity: " + humidity + "%");
@@ -87,7 +87,7 @@ function initPage() {
                     var tempRound = temp.toFixed(2);
                     var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
                     var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
-                    var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDateString());
+                    var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDatestring());
                     var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
                     var image = $("<img>").attr("src", forecastIcon);
                     var forecastTemp = $("<p>").addClass("card-temp").text(tempRound + " °F");

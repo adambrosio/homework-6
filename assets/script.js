@@ -2,7 +2,7 @@
 function initPage() {
 
     $(document).ready(function() {
-        console.log("ready");
+        // console.log("ready");
     });
 
     // Event listener for enter keypress
@@ -24,7 +24,7 @@ function initPage() {
             url: queryURL,
             method: "GET"
         }).then(function(response) {
-            console.log(response);
+            // console.log(response);
 
             // Variables being defined for data retrieved from the response object
             var cityName = response.name;
@@ -46,7 +46,7 @@ function initPage() {
                 url: uvURL,
                 method: "GET"
             }).then(function(uvResponse) {
-                console.log(uvResponse);
+                // console.log(uvResponse);
 
                 var uvIndex = uvResponse.value;
 
@@ -70,31 +70,33 @@ function initPage() {
             });
         });
 
-        var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
+        // var APIKey = "&appid=3f2c167c8daff8f6c0523b5e972f1c83";
+        // var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + APIKey;
         // Third ajax call to get 5 day forecast
         $.ajax({
-            url: forecastURL,
+            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=3f2c167c8daff8f6c0523b5e972f1c83",
             method: "GET"
         }).then(function (forecastResponse) {
             console.log(forecastResponse);
             $("#forecast").empty();
-            var results = forecastResponse.list
-            for (var i = 0; i < results.length; i++) {
+            // var results = forecastResponse.list
+            for (var i = 0; i < forecastResponse.list.length; i++) {
                 // HERE'S THE PROBLEM
-                if (results[i].dt_txt.includes("12:00:00")) {
-                    var newDate = new Date();
-                    var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
-                    var tempRound = temp.toFixed(2);
-                    var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
-                    var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
-                    var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDatestring());
-                    var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
-                    var image = $("<img>").attr("src", forecastIcon);
-                    var forecastTemp = $("<p>").addClass("card-temp").text(tempRound + " °F");
-                    var forecastHumidity = $("<p>").addClass("card-humidity").text("Humidity:" + results[i].main.humidity + "%");
-                    cardBody.append(date, image, forecastTemp, forecastHumidity);
-                    card.append(cardBody);
-                    $("#forecast").append(card);
+                    console.log(forecastResponse.list);
+                    if (forecastResponse.list[i].dt_txt.indexOf("12:00:00") !== -1) {
+                        // var newDate = new Date();
+                        // var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
+                        // var tempRound = temp.toFixed(2);
+                        // var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
+                        // var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
+                        // var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDatestring());
+                        // var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
+                        // var image = $("<img>").attr("src", forecastIcon);
+                        // var forecastTemp = $("<p>").addClass("card-temp").text(tempRound + " °F");
+                        // var forecastHumidity = $("<p>").addClass("card-humidity").text("Humidity:" + results[i].main.humidity + "%");
+                        // cardBody.append(date, image, forecastTemp, forecastHumidity);
+                        // card.append(cardBody);
+                        // $("#forecast").append(card);
                 };
             };
         });

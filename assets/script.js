@@ -82,21 +82,22 @@ function initPage() {
             // var results = forecastResponse.list
             for (var i = 0; i < forecastResponse.list.length; i++) {
                 // HERE'S THE PROBLEM
-                    console.log(forecastResponse.list);
+                    // console.log(forecastResponse.list);
                     if (forecastResponse.list[i].dt_txt.indexOf("12:00:00") !== -1) {
-                        // var newDate = new Date();
-                        // var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
-                        // var tempRound = temp.toFixed(2);
-                        // var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
-                        // var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
-                        // var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDatestring());
-                        // var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
-                        // var image = $("<img>").attr("src", forecastIcon);
-                        // var forecastTemp = $("<p>").addClass("card-temp").text(tempRound + " °F");
-                        // var forecastHumidity = $("<p>").addClass("card-humidity").text("Humidity:" + results[i].main.humidity + "%");
-                        // cardBody.append(date, image, forecastTemp, forecastHumidity);
-                        // card.append(cardBody);
-                        // $("#forecast").append(card);
+                        var newDate = new Date();
+                        var results = forecastResponse.list;
+                        var temp = (results[i].main.temp - 273.15) * 1.80 + 32;
+                        var tempRound = temp.toFixed(2);
+                        var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
+                        var cardBody = $("<div>").addClass("card-body p-3 forecast-body");
+                        var date = $("<h2>").addClass("card-title").text(newDate(results[i].dt_txt).toLocaleDatestring());
+                        var forecastIcon = "http://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png";
+                        var image = $("<img>").attr("src", forecastIcon);
+                        var forecastTemp = $("<p>").addClass("card-temp").text(tempRound + " °F");
+                        var forecastHumidity = $("<p>").addClass("card-humidity").text("Humidity:" + results[i].main.humidity + "%");
+                        cardBody.append(date, image, forecastTemp, forecastHumidity);
+                        card.append(cardBody);
+                        $("#forecast").append(card);
                 };
             };
         });
